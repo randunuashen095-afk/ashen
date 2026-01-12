@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASHEN AI | Next-Gen Video Marketplace</title>
+    <meta name="description" content="Elite AI-generated video marketplace for creators and businesses.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* 
+        ========================================
+        🎨 CSS VARIABLES & THEME SETUP
+        ========================================
+        */
+        :root {
+            /* Palette - Dark Mode (Default) */
+            --bg-primary: #050507;
+            --bg-secondary: #0f0f16;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.07);
+            --border-color: rgba(255, 255, 255, 0.08);
+            
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
+            
+            --primary: #6366f1; /* Indigo */
+            --primary-glow: rgba(99, 102, 241, 0.5);
+            --accent: #ec4899; /* Pink */
+            --accent-glow: rgba(236, 72, 153, 0.5);
+            --cyan: #06b6d4;
+            
+            --gradient-main: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            --gradient-text: linear-gradient(to right, #818cf8, #c084fc, #f472b6);
+            
+            --font-main: 'Inter', sans-serif;
+            --font-display: 'Outfit', sans-serif;
+            
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Light Mode Overrides */
+        [data-theme="light"] {
+            --bg-primary: #f3f4f6;
+            --bg-secondary: #ffffff;
+            --bg-glass: rgba(0, 0, 0, 0.02);
+            --bg-glass-hover: rgba(0, 0, 0, 0.05);
+            --border-color: rgba(0, 0, 0, 0.08);
+            
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            
+            --primary: #4f46e5;
+            --primary-glow: rgba(79, 70, 229, 0.3);
+        }
+
+        /* 
+        ========================================
+        RESET & GLOBAL STYLES
+        ========================================
+        */
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Typography */
+        h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 700; line-height: 1.2; }
+        .text-gradient {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Utility Classes */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .gap-1 { gap: 0.5rem; }
+        .gap-2 { gap: 1rem; }
+        .gap-4 { gap: 2rem; }
+        .grid { display: grid; }
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 2rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .hidden { display: none !important; }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+        .glass-card:hover {
+            background: var(--bg-glass-hover);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-main);
+            color: white;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.2); }
+
+        /* Inputs */
+        .input-group { margin-bottom: 1rem; text-align: left; }
+        .input-label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-muted); }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            transition: var(--transition);
+        }
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        /* 
+        ========================================
+        COMPONENTS
+        ========================================
+        */
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 16px 0;
+            background: rgba(5, 5, 7, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-brand { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; font-family: var(--font-display); }
+        .nav-link { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; margin-left: 24px; transition: var(--transition); }
+        .nav-link:hover, .nav-link.active { color: var(--text-main); }
+        .nav-link.active { color: var(--primary); }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            opacity: 0.2;
+            z-index: -1;
+            filter: blur(80px);
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 1.5rem; line-height: 1.1; }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem; }
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+        }
+        .stat-item h3 { font-size: 2.5rem; color: var(--text-main); }
+        .stat-item p { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Video Grid */
+        .marketplace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .video-card { overflow: hidden; position: relative; }
+        .video-thumb {
+            width: 100%;
+            height: 180px;
+            background-color: #222;
+            position: relative;
+            overflow: hidden;
+        }
+        .video-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .video-card:hover .video-thumb img { transform: scale(1.05); }
+        .play-btn {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: var(--transition);
+        }
+        .video-card:hover .play-btn { opacity: 1; }
+        .video-info { padding: 1.25rem; }
+        .video-title { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .video-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--text-muted); }
+        .price-tag { color: var(--cyan); font-weight: 700; }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .pricing-card {
+            padding: 2.5rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .pricing-card.popular { border: 1px solid var(--primary); box-shadow: 0 0 30px rgba(99,102,241,0.15); }
+        .popular-badge {
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--gradient-main); padding: 4px 12px;
+            border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+        }
+        .plan-price { font-size: 3rem; font-weight: 800; margin: 1.5rem 0; font-family: var(--font-display); }
+        .plan-price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+        .feature-list li { margin-bottom: 1rem; display: flex; align-items: center; color: var(--text-muted); }
+        .feature-list li svg { width: 20px; height: 20px; margin-right: 10px; color: var(--primary); }
+
+        /* Auth & Forms */
+        .auth-container {
+            max-width: 400px;
+            margin: 120px auto;
+            padding: 2.5rem;
+        }
+
+        /* Dashboard Tables */
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { text-align: left; padding: 1rem; border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-weight: 500; }
+        td { padding: 1rem; border-bottom: 1px solid var(--border-color); color: var(--text-main); }
+        tr:last-child td { border-bottom: none; }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* Preloader */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-primary); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .loader {
+            width: 48px; height: 48px;
+            border: 3px solid var(--border-color);
+            border-bottom-color: var(--primary);
+            border-radius: 50%;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Toast */
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            padding: 12px 20px; border-radius: var(--radius-sm);
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideIn 0.3s ease forwards;
+        }
+        .toast.success { border-left: 4px solid var(--cyan); }
+        .toast.error { border-left: 4px solid #ef4444; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            z-index: 1500; display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: var(--transition);
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            width: 90%; max-width: 600px; padding: 2rem; border-radius: var(--radius-md);
+            position: relative; transform: scale(0.95); transition: var(--transition);
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .close-modal { position: absolute; top: 1rem; right: 1rem; cursor: pointer; font-size: 1.5rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Simplified mobile handling */
+            .navbar .container { justify-content: space-between; }
+            .mobile-menu-btn { display: block; font-size: 1.5rem; }
+        }
+        @media (min-width: 769px) {
+            .mobile-menu-btn { display: none; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- 🌀 Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- 🔔 Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- 🎞️ Video Preview Modal -->
+    <div class="modal-overlay" id="videoModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('videoModal')">&times;</span>
+            <h2 id="modalTitle" class="mb-4">Video Title</h2>
+            <div style="width: 100%; height: 300px; background: #000; display: flex; align-items: center; justify-content: center; border-radius: 8px; margin-bottom: 1.5rem;">
+                <p style="color: #fff;">[ Video Player Simulation ]</p>
+            </div>
+            <div class="flex justify-between items-center">
+                <div>
+                    <p style="color: var(--text-muted)">License: <span style="color: var(--text-main)">Commercial</span></p>
+                    <p class="price-tag" id="modalPrice">$0.00</p>
+                </div>
+                <button class="btn btn-primary" id="modalBuyBtn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🧭 Navigation -->
+    <nav class="navbar">
+        <div class="container flex items-center justify-between">
+            <a href="#" onclick="router.navigate('home')" class="nav-brand text-gradient">ASHEN AI</a>
+            
+            <div class="nav-links flex items-center" id="navLinks">
+                <!-- Links injected by JS based on Auth state -->
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button class="btn btn-secondary" style="padding: 8px 12px;" onclick="toggleTheme()">🌓</button>
+                <div class="mobile-menu-btn" style="margin-left: 10px;">☰</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 📄 MAIN APP CONTAINER -->
+    <main id="app">
+        
+        <!-- 🔥 VIEW: LANDING PAGE -->
+        <section id="view-home" class="view">
+            <div class="container">
+                <div class="hero">
+                    <h1 class="animate-in">Create Cinematic AI Videos<br><span class="text-gradient">In Seconds</span></h1>
+                    <p class="animate-in delay-1">The world's most advanced AI video marketplace for creators, marketers, and visionaries. No editing skills required.</p>
+                    <div class="animate-in delay-2 flex justify-center gap-2">
+                        <button class="btn btn-primary" onclick="router.navigate('marketplace')">Browse Videos</button>
+                        <button class="btn btn-secondary" onclick="router.navigate('pricing')">View Pricing</button>
+                    </div>
+
+                    <div class="stats-row animate-in delay-3">
+                        <div class="stat-item">
+                            <h3 data-count="12500">0</h3>
+                            <p>Videos Sold</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 data-count="8400">0</h3>
+                            <p>Happy Creators</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 data-count="99">0</h3>
+                            <p>AI Models</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="container text-center mb-4">
+                <p class="text-muted mb-4" style="font-size: 0.9rem; text-transform: uppercase;">Trusted by next-gen companies</p>
+                <div class="flex justify-center gap-4" style="opacity: 0.5; filter: grayscale(1);">
+                    <h3>ACME Corp</h3>
+                    <h3>NeonSoft</h3>
+                    <h3>Hyperion</h3>
+                    <h3>Galactic</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🎬 VIEW: MARKETPLACE -->
+        <section id="view-marketplace" class="view hidden">
+            <div class="container" style="padding-top: 120px;">
+                <div class="flex justify-between items-center mb-4">
+                    <h2>AI Video Store</h2>
+                    <div class="flex gap-2">
+                        <select class="input-field" style="width: auto;" id="categoryFilter">
+                            <option value="all">All Categories</option>
+                            <option value="tech">Technology</option>
+                            <option value="nature">Nature</option>
+                            <option value="abstract">Abstract</option>
+                            <option value="cinematic">Cinematic</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="marketplace-grid" id="marketplaceGrid">
+                    <!-- Videos injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 💎 VIEW: PRICING -->
+        <section id="view-pricing" class="view hidden">
+            <div class="container text-center" style="padding-top: 120px;">
+                <h2 class="mb-4">Choose Your Plan</h2>
+                <p class="text-muted">Unlock the full potential of AI generation.</p>
+                
+                <div class="pricing-grid">
+                    <!-- Starter -->
+                    <div class="glass-card pricing-card">
+                        <h3>Starter</h3>
+                        <div class="plan-price">$19<span>/mo</span></div>
+                        <ul class="feature-list" style="text-align: left;">
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 5 AI Videos/mo</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 720p Quality</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Personal License</li>
+                        </ul>
+                        <button class="btn btn-secondary mt-4" onclick="handleSubscribe('Starter')">Get Started</button>
+                    </div>
+
+                    <!-- Pro -->
+                    <div class="glass-card pricing-card popular">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3>Pro Creator</h3>
+                        <div class="plan-price">$49<span>/mo</span></div>
+                        <ul class="feature-list" style="text-align: left;">
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 25 AI Videos/mo</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 4K Resolution</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Commercial License</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> No Watermark</li>
+                        </ul>
+                        <button class="btn btn-primary mt-4" onclick="handleSubscribe('Pro')">Upgrade to Pro</button>
+                    </div>
+
+                    <!-- Enterprise -->
+                    <div class="glass-card pricing-card">
+                        <h3>Enterprise</h3>
+                        <div class="plan-price">$199<span>/mo</span></div>
+                        <ul class="feature-list" style="text-align: left;">
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Unlimited Videos</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> API Access</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Dedicated Support</li>
+                        </ul>
+                        <button class="btn btn-secondary mt-4" onclick="handleSubscribe('Enterprise')">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🔐 VIEW: AUTH -->
+        <section id="view-login" class="view hidden">
+            <div class="auth-container glass-card">
+                <h2 class="text-center mb-4">Welcome Back</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <label class="input-label">Email</label>
+                        <input type="email" id="loginEmail" class="input-field" required placeholder="user@example.com">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Password</label>
+                        <input type="password" id="loginPass" class="input-field" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                    <p class="text-center mt-4" style="font-size: 0.9rem; color: var(--text-muted);">
+                        Don't have an account? <a onclick="router.navigate('signup')" style="color: var(--primary);">Sign up</a>
+                    </p>
+                    <p class="text-center mt-4" style="font-size: 0.8rem; color: var(--text-muted);">
+                        (Try <b>admin@ashen.ai</b> / <b>admin</b> for Admin Panel)
+                    </p>
+                </form>
+            </div>
+        </section>
+
+        <section id="view-signup" class="view hidden">
+            <div class="auth-container glass-card">
+                <h2 class="text-center mb-4">Create Account</h2>
+                <form onsubmit="handleSignup(event)">
+                    <div class="input-group">
+                        <label class="input-label">Full Name</label>
+                        <input type="text" id="signupName" class="input-field" required>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Email</label>
+                        <input type="email" id="signupEmail" class="input-field" required>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Password</label>
+                        <input type="password" id="signupPass" class="input-field" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                    <p class="text-center mt-4" style="font-size: 0.9rem; color: var(--text-muted);">
+                        Already have an account? <a onclick="router.navigate('login')" style="color: var(--primary);">Sign in</a>
+                    </p>
+                </form>
+            </div>
+        </section>
+
+        <!-- 📊 VIEW: DASHBOARD -->
+        <section id="view-dashboard" class="view hidden">
+            <div class="container" style="padding-top: 120px;">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 id="dashWelcome">Hello, User</h2>
+                        <p class="text-muted">Manage your assets and subscription.</p>
+                    </div>
+                    <button class="btn btn-secondary" onclick="auth.logout()">Logout</button>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem;">
+                    <div class="glass-card p-4" style="padding: 1.5rem;">
+                        <p class="text-muted">Purchased Videos</p>
+                        <h3 id="dashCount">0</h3>
+                    </div>
+                    <div class="glass-card p-4" style="padding: 1.5rem;">
+                        <p class="text-muted">Current Plan</p>
+                        <h3 id="dashPlan" style="color: var(--primary);">Free</h3>
+                    </div>
+                    <div class="glass-card p-4" style="padding: 1.5rem;">
+                        <p class="text-muted">Total Spent</p>
+                        <h3 id="dashSpent">$0.00</h3>
+                    </div>
+                </div>
+
+                <h3 class="mb-4">My Library</h3>
+                <div class="glass-card" style="padding: 1rem;">
+                    <div class="table-container">
+                        <table id="libraryTable">
+                            <thead>
+                                <tr>
+                                    <th>Video Title</th>
+                                    <th>Date</th>
+                                    <th>License</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                        <div id="emptyLibrary" class="text-center hidden" style="padding: 2rem;">
+                            <p class="text-muted">No videos purchased yet.</p>
+                            <button class="btn btn-primary mt-4" onclick="router.navigate('marketplace')">Browse Store</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🛠️ VIEW: ADMIN PANEL -->
+        <section id="view-admin" class="view hidden">
+            <div class="container" style="padding-top: 120px;">
+                <div class="flex justify-between items-center mb-4">
+                    <h2>Admin Panel</h2>
+                    <button class="btn btn-danger" onclick="auth.logout()">Logout</button>
+                </div>
+
+                <div class="grid gap-4" style="grid-template-columns: 1fr 2fr;">
+                    <!-- Add Product Form -->
+                    <div class="glass-card p-4" style="padding: 2rem;">
+                        <h3 class="mb-4">Add New Video</h3>
+                        <form onsubmit="admin.addProduct(event)">
+                            <div class="input-group">
+                                <label class="input-label">Title</label>
+                                <input type="text" id="adminTitle" class="input-field" required>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Price ($)</label>
+                                <input type="number" id="adminPrice" class="input-field" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Category</label>
+                                <select id="adminCat" class="input-field">
+                                    <option value="tech">Technology</option>
+                                    <option value="nature">Nature</option>
+                                    <option value="abstract">Abstract</option>
+                                    <option value="cinematic">Cinematic</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Upload Video</button>
+                        </form>
+                    </div>
+
+                    <!-- Product List -->
+                    <div class="glass-card p-4" style="padding: 2rem;">
+                        <h3 class="mb-4">Product Inventory</h3>
+                        <div class="table-container">
+                            <table id="adminTable">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminTableBody">
+                                    <!-- Populated JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📞 VIEW: SUPPORT -->
+        <section id="view-support" class="view hidden">
+            <div class="container text-center" style="padding-top: 120px; max-width: 600px;">
+                <h2 class="mb-4">How can we help?</h2>
+                <div class="glass-card p-4" style="padding: 2rem; text-align: left;">
+                    <form onsubmit="handleSupport(event)">
+                        <div class="input-group">
+                            <label class="input-label">Subject</label>
+                            <input type="text" class="input-field" required>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Message</label>
+                            <textarea class="input-field" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 🦶 Footer -->
+    <footer style="border-top: 1px solid var(--border-color); padding: 3rem 0; margin-top: 4rem; background: var(--bg-secondary);">
+        <div class="container text-center">
+            <h3 class="nav-brand text-gradient mb-4">ASHEN AI</h3>
+            <p class="text-muted">© 2023 Ashen AI Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 
+    ========================================
+    ⚙️ JAVASCRIPT LOGIC
+    ========================================
+    -->
+    <script>
+        /**
+         * 🗄️ LOCALSTORAGE DATABASE SIMULATION
+         */
+        const DB_NAME = 'ASHEN_AI_DB';
+        
+        const initialData = {
+            users: [
+                { id: 1, name: 'Admin User', email: 'admin@ashen.ai', pass: 'admin', role: 'admin', plan: 'Enterprise', spent: 0, library: [] },
+                { id: 2, name: 'Demo User', email: 'user@ashen.ai', pass: 'user', role: 'user', plan: 'Free', spent: 0, library: [] }
+            ],
+            products: [
+                { id: 101, title: 'Cyberpunk City Rain', price: 29.99, category: 'cinematic', img: 'https://picsum.photos/seed/cyber/400/300' },
+                { id: 102, title: 'Neural Network Visualization', price: 19.99, category: 'tech', img: 'https://picsum.photos/seed/neural/400/300' },
+                { id: 103, title: 'Abstract Flow', price: 14.99, category: 'abstract', img: 'https://picsum.photos/seed/abstract/400/300' },
+                { id: 104, title: 'Forest Drone Shot', price: 24.99, category: 'nature', img: 'https://picsum.photos/seed/forest/400/300' },
+                { id: 105, title: 'Data Stream Loop', price: 12.99, category: 'tech', img: 'https://picsum.photos/seed/data/400/300' },
+                { id: 106, title: 'Galaxy Warp', price: 34.99, category: 'cinematic', img: 'https://picsum.photos/seed/galaxy/400/300' }
+            ],
+            currentUser: null
+        };
+
+        const db = {
+            get: () => {
+                const data = localStorage.getItem(DB_NAME);
+                return data ? JSON.parse(data) : initialData;
+            },
+            save: (data) => {
+                localStorage.setItem(DB_NAME, JSON.stringify(data));
+            },
+            update: (callback) => {
+                const data = db.get();
+                const newData = callback(data);
+                db.save(newData || data);
+            }
+        };
+
+        // Initialize DB if empty
+        if (!localStorage.getItem(DB_NAME)) db.save(initialData);
+
+        /**
+         * 🧭 ROUTER
+         */
+        const router = {
+            navigate: (viewName) => {
+                // Hide all views
+                document.querySelectorAll('.view').forEach(el => el.classList.add('hidden'));
+                
+                // Show target view
+                const target = document.getElementById(`view-${viewName}`);
+                if (target) {
+                    target.classList.remove('hidden');
+                    window.scrollTo(0, 0);
+                }
+
+                // Update Nav state
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                const activeLink = document.querySelector(`[onclick="router.navigate('${viewName}')"]`);
+                if (activeLink && activeLink.classList.contains('nav-link')) {
+                    activeLink.classList.add('active');
+                }
+
+                // View specific logic
+                if (viewName === 'marketplace') marketplace.render();
+                if (viewName === 'dashboard') dashboard.render();
+                if (viewName === 'admin') admin.render();
+            }
+        };
+
+        /**
+         * 🔐 AUTHENTICATION
+         */
+        const auth = {
+            login: (email, pass) => {
+                const data = db.get();
+                const user = data.users.find(u => u.email === email && u.pass === pass);
+                
+                if (user) {
+                    db.update(d => { d.currentUser = user; return d; });
+                    ui.renderNav();
+                    ui.toast(`Welcome back, ${user.name}`, 'success');
+                    
+                    if (user.role === 'admin') router.navigate('admin');
+                    else router.navigate('dashboard');
+                } else {
+                    ui.toast('Invalid credentials', 'error');
+                }
+            },
+            signup: (name, email, pass) => {
+                db.update(d => {
+                    const newUser = {
+                        id: Date.now(),
+                        name, email, pass, role: 'user', plan: 'Free', spent: 0, library: []
+                    };
+                    d.users.push(newUser);
+                    d.currentUser = newUser;
+                    return d;
+                });
+                ui.renderNav();
+                router.navigate('dashboard');
+                ui.toast('Account created successfully', 'success');
+            },
+            logout: () => {
+                db.update(d => { d.currentUser = null; return d; });
+                ui.renderNav();
+                router.navigate('home');
+                ui.toast('Logged out', 'success');
+            },
+            check: () => {
+                const data = db.get();
+                return data.currentUser;
+            }
+        };
+
+        /**
+         * 🛒 MARKETPLACE LOGIC
+         */
+        const marketplace = {
+            render: () => {
+                const data = db.get();
+                const grid = document.getElementById('marketplaceGrid');
+                const filter = document.getElementById('categoryFilter').value;
+                
+                grid.innerHTML = '';
+                
+                const filtered = filter === 'all' 
+                    ? data.products 
+                    : data.products.filter(p => p.category === filter);
+
+                filtered.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'glass-card video-card animate-in';
+                    card.innerHTML = `
+                        <div class="video-thumb" onclick="marketplace.preview(${p.id})">
+                            <img src="${p.img}" alt="${p.title}">
+                            <div class="play-btn">▶</div>
+                        </div>
+                        <div class="video-info">
+                            <h4 class="video-title">${p.title}</h4>
+                            <div class="video-meta">
+                                <span>${p.category.toUpperCase()}</span>
+                                <span class="price-tag">$${p.price}</span>
+                            </div>
+                            <button class="btn btn-primary mt-4" style="width:100%" onclick="marketplace.buy(${p.id})">Instant Buy</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            },
+            preview: (id) => {
+                const data = db.get();
+                const product = data.products.find(p => p.id === id);
+                if(!product) return;
+
+                document.getElementById('modalTitle').innerText = product.title;
+                document.getElementById('modalPrice').innerText = `$${product.price}`;
+                document.getElementById('modalBuyBtn').onclick = () => { marketplace.buy(id); closeModal('videoModal'); };
+                
+                const modal = document.getElementById('videoModal');
+                modal.classList.add('active');
+            },
+            buy: (id) => {
+                const user = auth.check();
+                if (!user) {
+                    ui.toast('Please login to purchase', 'error');
+                    router.navigate('login');
+                    return;
+                }
+
+                const data = db.get();
+                const product = data.products.find(p => p.id === id);
+                
+                // Update User
+                db.update(d => {
+                    const uIndex = d.users.findIndex(u => u.id === user.id);
+                    if (uIndex > -1) {
+                        d.users[uIndex].library.push(product);
+                        d.users[uIndex].spent += product.price;
+                        d.currentUser = d.users[uIndex]; // Update session
+                    }
+                    return d;
+                });
+
+                ui.toast(`Successfully purchased ${product.title}`, 'success');
+                // Trigger confetti or sound here ideally
+            }
+        };
+
+        /**
+         * 📊 DASHBOARD LOGIC
+         */
+        const dashboard = {
+            render: () => {
+                const user = auth.check();
+                if (!user) return router.navigate('login');
+
+                document.getElementById('dashWelcome').innerText = `Hello, ${user.name}`;
+                document.getElementById('dashCount').innerText = user.library.length;
+                document.getElementById('dashPlan').innerText = user.plan;
+                document.getElementById('dashSpent').innerText = `$${user.spent.toFixed(2)}`;
+
+                const tbody = document.querySelector('#libraryTable tbody');
+                tbody.innerHTML = '';
+                
+                if (user.library.length === 0) {
+                    document.getElementById('libraryTable').classList.add('hidden');
+                    document.getElementById('emptyLibrary').classList.remove('hidden');
+                } else {
+                    document.getElementById('libraryTable').classList.remove('hidden');
+                    document.getElementById('emptyLibrary').classList.add('hidden');
+                    
+                    user.library.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.title}</td>
+                            <td>${new Date().toLocaleDateString()}</td>
+                            <td>Commercial</td>
+                            <td><button class="btn btn-secondary" style="padding:4px 8px; font-size:0.8rem">Download</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+        };
+
+        /**
+         * 🛠️ ADMIN LOGIC
+         */
+        const admin = {
+            render: () => {
+                const user = auth.check();
+                if (!user || user.role !== 'admin') {
+                    router.navigate('home');
+                    ui.toast('Access Denied', 'error');
+                    return;
+                }
+                
+                const data = db.get();
+                const tbody = document.getElementById('adminTableBody');
+                tbody.innerHTML = '';
+
+                data.products.forEach(p => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${p.title}</td>
+                        <td>${p.category}</td>
+                        <td>$${p.price}</td>
+                        <td><button class="btn btn-danger" style="padding:4px 8px; font-size:0.8rem" onclick="admin.delete(${p.id})">Delete</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            },
+            addProduct: (e) => {
+                e.preventDefault();
+                const title = document.getElementById('adminTitle').value;
+                const price = parseFloat(document.getElementById('adminPrice').value);
+                const category = document.getElementById('adminCat').value;
+
+                db.update(d => {
+                    d.products.push({
+                        id: Date.now(),
+                        title, price, category,
+                        img: `https://picsum.photos/seed/${Date.now()}/400/300`
+                    });
+                    return d;
+                });
+
+                ui.toast('Product added', 'success');
+                e.target.reset();
+                admin.render();
+            },
+            delete: (id) => {
+                if(!confirm('Delete this product?')) return;
+                db.update(d => {
+                    d.products = d.products.filter(p => p.id !== id);
+                    return d;
+                });
+                admin.render();
+                ui.toast('Product deleted', 'success');
+            }
+        };
+
+        /**
+         * 🎨 UI & UTILS
+         */
+        const ui = {
+            toast: (msg, type = 'success') => {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.innerHTML = `<span>${type === 'success' ? '✅' : '⚠️'}</span> ${msg}`;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            },
+            renderNav: () => {
+                const user = auth.check();
+                const nav = document.getElementById('navLinks');
+                
+                let links = `
+                    <a onclick="router.navigate('home')" class="nav-link">Home</a>
+                    <a onclick="router.navigate('marketplace')" class="nav-link">Store</a>
+                    <a onclick="router.navigate('pricing')" class="nav-link">Pricing</a>
+                `;
+
+                if (user) {
+                    if (user.role === 'admin') {
+                        links += `<a onclick="router.navigate('admin')" class="nav-link" style="color:var(--accent)">Admin</a>`;
+                    } else {
+                        links += `<a onclick="router.navigate('dashboard')" class="nav-link">Dashboard</a>`;
+                    }
+                } else {
+                    links += `<a onclick="router.navigate('login')" class="nav-link">Login</a>`;
+                    links += `<a onclick="router.navigate('signup')" class="btn btn-primary" style="margin-left:1rem; color:white;">Sign Up</a>`;
+                }
+                nav.innerHTML = links;
+            }
+        };
+
+        // --- Event Handlers ---
+
+        function handleLogin(e) {
+            e.preventDefault();
+            auth.login(document.getElementById('loginEmail').value, document.getElementById('loginPass').value);
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            auth.signup(document.getElementById('signupName').value, document.getElementById('signupEmail').value, document.getElementById('signupPass').value);
+        }
+
+        function handleSubscribe(plan) {
+            const user = auth.check();
+            if (!user) {
+                ui.toast('Login to upgrade', 'error');
+                router.navigate('login');
+                return;
+            }
+            ui.toast(`Successfully upgraded to ${plan}!`, 'success');
+            db.update(d => {
+                const u = d.users.find(u => u.id === user.id);
+                u.plan = plan;
+                d.currentUser = u;
+                return d;
+            });
+            router.navigate('dashboard');
+        }
+
+        function handleSupport(e) {
+            e.preventDefault();
+            ui.toast('Message sent! We will reply shortly.', 'success');
+            e.target.reset();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const current = body.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', next);
+        }
+
+        // --- Animations & Init ---
+
+        // Counter Animation
+        function startCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-count');
+                const inc = target / 100;
+                let count = 0;
+                const updateCount = () => {
+                    count += inc;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count).toLocaleString();
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        counter.innerText = target.toLocaleString() + '+';
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        // Filter Listener
+        document.getElementById('categoryFilter').addEventListener('change', marketplace.render);
+
+        // Initialization
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').style.opacity = '0';
+                setTimeout(() => document.getElementById('preloader').style.display = 'none', 500);
+            }, 800);
+
+            ui.renderNav();
+            
+            // Start counter if on home
+            if(location.hash === '' || location.hash === '#home') startCounters();
+            
+            // Simple Hash Routing Check
+            const hash = location.hash.replace('#', '') || 'home';
+            router.navigate(hash);
+        });
+
+    </script>
+</body>
+</html>
